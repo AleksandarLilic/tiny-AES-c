@@ -5,9 +5,10 @@
 #include "svdpi.h"
 
 DPI_DLLESPEC
-void aes_dpi(uint8_t* key, uint8_t* plaintext, uint8_t* ciphertext) {  
+void aes_dpi(uint8_t* key, uint8_t* plaintext, uint8_t* round_keys, uint8_t* ciphertext) {  
     struct AES_ctx ctx;
     AES_init_ctx(&ctx, key);
     memcpy(ciphertext, plaintext, 16);
     AES_ECB_encrypt(&ctx, ciphertext);
+    memcpy(round_keys, ctx.RoundKey, 240);
 }
